@@ -47,7 +47,7 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
     def double_click_cell(self, info):
         row = info.row()
         column = info.column()
-        os.system(f'"{self.resultTable.item(row, column).text()}"')
+        os.startfile(self.resultTable.item(row, column).text())
 
 
     def start(self):
