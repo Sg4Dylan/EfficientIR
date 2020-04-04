@@ -5,7 +5,7 @@
 使用到的主要工具是 EfficientNet 和 Hnswlib，使用前者在 ImageNet 上的预训练模型进行特征抽取，使用后者进行特征索引及检索。因 EfficientNet 的 PyTorch 实现尚未提供 Python 3.7 及后续版本的支持，使用 ONNX 进行推理可方便安装使用，降低依赖门槛同时方便进一步移植开发 ~~（虽然大概率咕了）~~。
 
 使用前请注意，如果有任何使用上的问题请尽量自行解决（特别是 GUI 版本）。  
-比起花费时间维护，咱更希望像 Eagle 这样的专业图像管理软件加入特性持续维护。  
+比起花费时间维护，咱更希望像 digiKam/Eagle 这样的专业图像管理软件加入特性持续维护。  
 如果您有任何新点子，欢迎 fork 实现后 pull request。
 
 ### 依赖
@@ -16,6 +16,7 @@
  - pillow
  - tqdm
  - onnx (若需更换模型则必要)
+ - PyQt5 (使用 GUI 则必要)
 
 ### 使用
 
@@ -102,7 +103,8 @@ print(f'Input: {input_path} Result: {",".join(results)}')
 
  - [ ] ~~实现 Cli 工具~~
  - [x] 实现 GUI 工具
- - [ ] 移植到 C++ 使用 [ncnn](https://github.com/Tencent/ncnn) 推理
+ - [ ] 移植到 C++ 使用
+ - [ ] 替换 digiKam 内的模糊搜索
 
 ### References
  - [EfficientNet PyTorch](https://github.com/lukemelas/EfficientNet-PyTorch)
