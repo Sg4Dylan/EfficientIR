@@ -32,7 +32,7 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
     def _init_ui_(self):
         if os.path.exists(utils.name_index_path):
             self.exists_index = utils.get_exists_index()                                                # 加载索引
-        self.resultTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)         # 填充显示表格
+        self.resultTable.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)         # 填充显示表格
         self.resultTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)                    # 表格设置只读
         self.searchDirTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.searchDirTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
@@ -46,8 +46,7 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def double_click_cell(self, info):
         row = info.row()
-        column = info.column()
-        os.startfile(self.resultTable.item(row, column).text())
+        os.startfile(self.resultTable.item(row, 0).text())
 
 
     def start(self):
@@ -57,12 +56,15 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
         self.resultTable.setRowCount(0)                                                                 # 清空表格
         nc = self.resultCount.value()
         results = utils.checkout(self.input_path[0], self.exists_index, nc)
-        results = [i for i in results]
         for i in results:
             row = self.resultTable.rowCount()
             self.resultTable.insertRow(row)
-            item = QtWidgets.QTableWidgetItem(i)
-            self.resultTable.setItem(row,0,item)
+            item_sim = QtWidgets.QTableWidgetItem(f'{i[0]:.2f} %')
+            item_sim.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+            item_path = QtWidgets.QTableWidgetItem(i[1])
+            item_path.setToolTip(i[1])
+            self.resultTable.setItem(row,0,item_path)
+            self.resultTable.setItem(row,1,item_sim)
 
 
     def update_dir_table(self):

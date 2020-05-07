@@ -62,11 +62,19 @@
        </font>
       </property>
       <property name="columnCount">
-       <number>1</number>
+       <number>2</number>
       </property>
       <column>
        <property name="text">
         <string>文件路径</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>相似度</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
        </property>
       </column>
      </widget>

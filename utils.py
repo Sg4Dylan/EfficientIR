@@ -59,4 +59,5 @@ def remove_nonexists():
 
 def checkout(image_path, exists_index, match_n=5):
     fv = ir_engine.get_fv(image_path)
-    return [exists_index[i] for i in ir_engine.match(fv, match_n)]
+    sim, ids = ir_engine.match(fv, match_n)
+    return [(sim[i], exists_index[ids[i]]) for i in range(len(ids))]
