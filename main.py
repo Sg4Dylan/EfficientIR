@@ -16,5 +16,7 @@ exists_index = get_exists_index()                               # 获取目标�
 start_time = time.time()
 for i in os.listdir('target_img'):                              # 放置等待被检索的图片
     results = checkout(f'target_img/{i}', exists_index, 2)      # 被检索图片路径，图片仓库的索引，返回结果的数量
-    print(f'Input: {i} Result: {",".join(results)}')
+    print(f'Input: {i}')
+    for result in results:
+        print(f'Similarity: {result[0]:.2f} % Matched: {result[1]}')
 print(f'Match cost: {time.time()-start_time:.4f}s')
