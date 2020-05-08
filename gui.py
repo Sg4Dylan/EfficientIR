@@ -22,8 +22,10 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def _bind_ui_(self):
         self.selectBtn.clicked.connect(self.openfile)
-        self.startSearch.clicked.connect(self.start)
-        self.resultTable.doubleClicked.connect(self.double_click_cell)
+        self.startSearch.clicked.connect(self.start_search)
+        self.startSearchDuplicate.clicked.connect(self.start_search_duplicate)
+        self.resultTable.doubleClicked.connect(self.double_click_search_table)
+        self.resultTableDuplicate.doubleClicked.connect(self.double_click_duplicate_table)
         self.addSearchDir.clicked.connect(self.add_search_dir)
         self.updateIndex.clicked.connect(self.sync_index)
         self.removeInvalidIndex.clicked.connect(self.remove_invalid_index)
@@ -31,9 +33,12 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def _init_ui_(self):
         if os.path.exists(utils.name_index_path):
-            self.exists_index = utils.get_exists_index()                                                # 加载索引
-        self.resultTable.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)         # 填充显示表格
-        self.resultTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)                    # 表格设置只读
+            self.exists_index = utils.get_exists_index()                                                        # 加载索引
+        self.resultTable.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)              # 填充显示表格
+        self.resultTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)                            # 表格设置只读
+        self.resultTableDuplicate.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        self.resultTableDuplicate.horizontalHeader().setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        self.resultTableDuplicate.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.searchDirTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.searchDirTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.update_dir_table()
@@ -44,12 +49,22 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
         self.filePath.setText(self.input_path[0])
 
 
-    def double_click_cell(self, info):
+    def double_click_search_table(self, info):
         row = info.row()
         os.startfile(self.resultTable.item(row, 0).text())
 
 
-    def start(self):
+    def double_click_duplicate_table(self, info):
+        col = info.column()
+        if col > 1:
+            return
+        row = info.row()
+        os.startfile(self.resultTableDuplicate.item(row, col).text())
+
+
+    def start_search(self):
+        if not hasattr(self, 'input_path'):
+            self.openfile()
         if (config['search_dir'] == []) or (not os.path.exists(utils.name_index_path)):
             QtWidgets.QMessageBox.information(self, '提示', '索引都没有建搜你🐎 搜')
             return
@@ -65,6 +80,26 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
             item_path.setToolTip(i[1])
             self.resultTable.setItem(row,0,item_path)
             self.resultTable.setItem(row,1,item_sim)
+
+
+    def start_search_duplicate(self):
+        if (config['search_dir'] == []) or (not os.path.exists(utils.name_index_path)):
+            QtWidgets.QMessageBox.information(self, '提示', '索引都没有建查你🐎 查')
+            return
+        self.resultTableDuplicate.setRowCount(0)                                                        # 清空表格
+        threshold = self.similarityThreshold.value()
+        for i in utils.get_duplicate(self.exists_index, threshold):
+            row = self.resultTableDuplicate.rowCount()
+            self.resultTableDuplicate.insertRow(row)
+            item_path_a = QtWidgets.QTableWidgetItem(i[0])
+            item_path_a.setToolTip(i[0])
+            item_path_b = QtWidgets.QTableWidgetItem(i[1])
+            item_path_b.setToolTip(i[1])
+            item_sim = QtWidgets.QTableWidgetItem(f'{i[2]:.2f} %')
+            item_sim.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+            self.resultTableDuplicate.setItem(row,0,item_path_a)
+            self.resultTableDuplicate.setItem(row,1,item_path_b)
+            self.resultTableDuplicate.setItem(row,2,item_sim)
 
 
     def update_dir_table(self):
