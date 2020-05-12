@@ -8,6 +8,11 @@
 比起花费时间维护，咱更希望像 digiKam/Eagle 这样的专业图像管理软件加入特性持续维护。  
 如果您有任何新点子，欢迎 fork 实现后 pull request。
 
+### 功能特性
+ - 以图搜图
+ - 图片相似度计算
+ - 重复图片查找
+
 ### 依赖
  - Python 3.6+
  - numpy
@@ -24,6 +29,8 @@
 
  > 当前 GUI 版本打包仅支持 Windows x86_64 环境使用
 
+在 [Release](https://github.com/Sg4Dylan/EfficientIR/releases) 页面下载最新版程序打包，并解压到不包含中日韩文字的路径下。
+
 初次使用需要建立索引：
 1. 双击 `start.bat` 打开
 2. 单击 `设置` - `添加索引目录` 添加需要索引的图库目录
@@ -33,6 +40,12 @@
 1. 单击 `...` 选择图片
 2. 设置返回结果数量
 3. 单击 `开始搜索`
+4. 双击返回结果的文件路径打开图片
+
+图片查重：
+1. 单击 `查重` 切换到查重功能
+2. 设置过滤结果使用到的相似度阈值（最低为 70%）
+3. 单击 `开始查重`，并坐和放宽
 4. 双击返回结果的文件路径打开图片
 
 后续索引更新：
@@ -79,8 +92,31 @@ exists_index = get_exists_index()
 # checkout(被检索图片路径，图片仓库的索引，返回结果的数量) 返回匹配的图片路径
 results = checkout(input_path, exists_index, 2)
 # 打印搜索结果
-print(f'Input: {input_path} Result: {",".join(results)}')
+for result in results:
+    print(f'Similarity: {result[0]:.2f} % Matched: {result[1]}')
 ```
+
+### 更换模型
+
+当前本 repo 已包含以下模型：
+ - EfficientNet-B2
+ - Once For All (flops@595M_top1@80.0_finetune@75)
+
+关于将 PyTorch 或其他机器学习框架模型导出为 ONNX 模型的方法此处不再赘述。需要注意的是，导出的 ONNX 模型必须经过优化过程，可以使用 [onnx-simplifier](https://github.com/daquexian/onnx-simplifier) （推荐）或本项目包含的 `opti.py`。
+
+更换模型前可以使用 [Netron](https://lutzroeder.github.io/netron/) 检查模型的输入矩阵形状是否为 `1x3xNxN`,输出向量是否为 `1xN`。其中输入矩阵的形状对应 `efficient_ir.py` 中的常量 `img_size`，输出向量的形状对应 `init_index()` 方法的初始化维度 以及 `get_fv()` 方法的返回值。
+
+若只是希望更换模型为更大的 EfficientNet 模型，那么只需要确认并修改 `efficient_ir.py` 中的 `img_size` 和 `model_path`。  
+
+但如果需要更换为 Once For All 模型，虽然其输入与 EfficientNet-B2 相同，但输出是 `N` 并不是 `1xN`，故除修改 `model_path` 外，还需将 `get_fv()` 中返回所在行做出如下修改:  
+```
+修改前：
+return self.session.run([], {self.model_input: norm_img_data})[0][0]
+修改后
+return self.session.run([], {self.model_input: norm_img_data})[0]
+````
+
+**注意：更换模型后一定要重新建立索引**
 
 ### Q&A
 
@@ -93,11 +129,8 @@ print(f'Input: {input_path} Result: {",".join(results)}')
 > Q：改变搜索结果数量？  
 > A：修改调用 checkout 的第三个参数。
 
-> Q：更换更大规模的模型？  
-> A：首先转换 EfficientNet 模型到 ONNX 格式并使用 `opti.py` 优化，接着修改 `efficient_ir.py` 中的 `img_size` 和 `model_path`，最后重新索引即可。
-
 > Q：检索效果不佳怎么解决？  
-> A：当前代码中使用 b2 级别模型是权衡之后决定的，若追求更佳检索效果请自行更换更大规模的模型。
+> A：当前代码中使用 EfficientNet-b2 模型是经过权衡后决定的，若追求更佳检索效果请自行更换更大规模的 EfficientNet 模型或其他的 SOTA 模型。本项目将持续关注 SOTA 模型的发展，并在 [Wiki](https://github.com/Sg4Dylan/EfficientIR/wiki) 中更新相关测试结果。
 
 ### TODO
 
@@ -108,4 +141,5 @@ print(f'Input: {input_path} Result: {",".join(results)}')
 
 ### References
  - [EfficientNet PyTorch](https://github.com/lukemelas/EfficientNet-PyTorch)
+ - [Once For All](https://github.com/mit-han-lab/once-for-all)
  - [Hnswlib](https://github.com/nmslib/hnswlib)
