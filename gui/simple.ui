@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>868</width>
-    <height>630</height>
+    <width>870</width>
+    <height>667</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -120,7 +120,7 @@
            <number>1000</number>
           </property>
           <property name="value">
-           <number>15</number>
+           <number>17</number>
           </property>
          </widget>
         </item>
@@ -199,8 +199,7 @@
              </font>
             </property>
             <property name="text">
-             <string>请注意: 
-依据不同状况查重过程可能需要耗费数秒至数分钟, 请耐心等待</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;依据不同状况查重过程可能需要耗费数秒至数分钟，请耐心等待&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -243,7 +242,7 @@
              <double>0.100000000000000</double>
             </property>
             <property name="value">
-             <double>95.000000000000000</double>
+             <double>98.500000000000000</double>
             </property>
            </widget>
           </item>
@@ -362,7 +361,7 @@
              </font>
             </property>
             <property name="text">
-             <string>注意：初次使用时，请添加至少一个索引图库路径，并更新索引记录</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#ff0000;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;初次使用时，请添加至少一个索引图库路径，并更新索引记录&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
