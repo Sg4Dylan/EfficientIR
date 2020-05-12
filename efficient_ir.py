@@ -71,6 +71,6 @@ class EfficientIR:
 
 
     def match(self, fv, nc=5):
-        similarity = (1-np.tanh(self.hnsw_index.knn_query(fv, k=nc)[1][0]/3000))*100
-        results = self.hnsw_index.knn_query(fv, k=nc)[0][0]
-        return similarity, results
+        query = self.hnsw_index.knn_query(fv, k=nc)
+        similarity = (1-np.tanh(query[1][0]/3000))*100
+        return similarity, query[0][0]

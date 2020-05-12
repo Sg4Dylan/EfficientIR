@@ -39,6 +39,7 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
         self.resultTableDuplicate.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         self.resultTableDuplicate.horizontalHeader().setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         self.resultTableDuplicate.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.resultTableDuplicate.setSortingEnabled(True)
         self.searchDirTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.searchDirTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.update_dir_table()

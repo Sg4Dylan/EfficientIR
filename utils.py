@@ -64,11 +64,17 @@ def checkout(image_path, exists_index, match_n=5):
 
 
 def get_duplicate(exists_index, threshold, match_n=30):
+    ret_ids = []
     for idx in tqdm(range(len(exists_index)), ascii=True):
+        if idx in ret_ids:
+            continue
         try:
             fv = ir_engine.hnsw_index.get_items([idx])[0]
         except RuntimeError:
             continue
         sim, ids = ir_engine.match(fv, match_n)
-        if (sim[0] > threshold) and (ids[0] != idx):
-            yield (exists_index[idx], exists_index[ids[0]], sim[0])
+        for i in range(len(ids)):
+            if (sim[i] > threshold) and (ids[i] != idx) and (not idx in ret_ids):
+                ret_ids.append(ids[i])
+                ret_ids.append(idx)
+                yield (exists_index[idx], exists_index[ids[i]], sim[i])
