@@ -16,11 +16,13 @@ class EfficientIR:
         self.init_index()
         self.load_index()
         self.init_model()
+        Image.MAX_IMAGE_PIXELS = None
 
 
     def img_preprocess(self, image_path):
         try:
-            img = Image.open(image_path).resize((self.img_size, self.img_size),Image.BICUBIC).convert('RGB')
+            img = Image.open(image_path).resize((self.img_size, self.img_size),Image.BICUBIC)
+            img = img.convert('RGBA').convert('RGB')
         except OSError:
             print(f'\nFile broken: {image_path}')
             return None
