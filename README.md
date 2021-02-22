@@ -2,9 +2,9 @@
 
 基于内容的图片检索方法有很多，即便是传统算法也能达到不错的效果。 本项目起源于要求使用传统算法（SIFT）完成的课程作业，但实现过程中遇到了一些影响实际使用的问题（例如建立索引慢）。 经过简单调研（指咨询群友和 Google）后发现 PC 上并没有什么好用的本地图片检索工具，于是干脆在作业外另外弄了这个小工具。  
 
-使用到的主要工具是 EfficientNet 和 Hnswlib，使用前者在 ImageNet 上的预训练模型进行特征抽取，使用后者进行特征索引及检索。因 EfficientNet 的 PyTorch 实现尚未提供 Python 3.7 及后续版本的支持，使用 ONNX 进行推理可方便安装使用，降低依赖门槛同时方便进一步移植开发 ~~（虽然大概率咕了）~~。
+使用到的主要工具是 EfficientNet 和 Hnswlib，使用前者在 ImageNet 上的预训练模型进行特征抽取，使用后者进行特征索引及检索。  
 
-使用前请注意，如果有任何使用上的问题请尽量自行解决（特别是 GUI 版本）。  
+使用前请注意，如果有任何使用上的问题请尽量自行解决。  
 比起花费时间维护，咱更希望像 digiKam/Eagle 这样的专业图像管理软件加入特性持续维护。  
 如果您有任何新点子，欢迎 fork 实现后 pull request。
 
@@ -21,7 +21,7 @@
  - pillow
  - tqdm
  - onnx (若需更换模型则必要)
- - PyQt5 (使用 GUI 则必要)
+ - PyQt5
 
 ### 使用
 
@@ -51,51 +51,6 @@
 后续索引更新：
 1. 单击 `设置` - `更新索引目录` 更新索引
 
-#### 编程使用
-
-1. 第一次使用时对图片仓库文件夹建立索引
-```python
-from utils import *
-
-# 图片仓库的文件夹路径
-image_dir = 'YOUR_IMAGE_DIR'
-
-# 递归读取文件目录
-exists_index = index_target_dir(image_dir)
-# 按路径索引顺序建立内容检索索引
-update_ir_index(exists_index)
-```
-
-2. 后续更新索引
-```python
-from utils import *
-
-# 图片仓库的文件夹路径
-image_dir = 'YOUR_IMAGE_DIR'
-
-# 从索引中删除已经不存在的文件
-remove_nonexists()
-# 往索引更新新加入的文件
-exists_index = index_target_dir(image_dir)
-# 按路径索引顺序建立内容检索索引
-update_ir_index(exists_index)
-```
-
-3. 以图搜图
-```python
-from utils import *
-
-# 用来搜索的图片路径
-input_path = 'YOUR_IMAGE_PATH'
-# 获取图库文件夹的路径索引记录
-exists_index = get_exists_index()
-# checkout(被检索图片路径，图片仓库的索引，返回结果的数量) 返回匹配的图片路径
-results = checkout(input_path, exists_index, 2)
-# 打印搜索结果
-for result in results:
-    print(f'Similarity: {result[0]:.2f} % Matched: {result[1]}')
-```
-
 ### 更换模型
 
 当前本 repo 已包含以下模型：
@@ -109,32 +64,41 @@ for result in results:
 若只是希望更换模型为更大的 EfficientNet 模型，那么只需要确认并修改 `efficient_ir.py` 中的 `img_size` 和 `model_path`。  
 
 但如果需要更换为 Once For All 模型，虽然其输入与 EfficientNet-B2 相同，但输出是 `N` 并不是 `1xN`，故除修改 `model_path` 外，还需将 `get_fv()` 中返回所在行做出如下修改:  
+
 ```
 修改前：
 return self.session.run([], {self.model_input: norm_img_data})[0][0]
 修改后
 return self.session.run([], {self.model_input: norm_img_data})[0]
-````
+```
 
 **注意：更换模型后一定要重新建立索引**
+
+### GPU 加速
+
+当前选择的模型均对性能进行了权衡，在支持 AVX 指令集的 CPU 上索引速度略高于甜品级 GPU。  
+若期待通过 GPU 加速获得更好的性能及加速比，可以将模型换成更大规模的或增加索引时同时处理的图片数量。  
+具体的操作请自行阅读并修改代码实现。  
+
+如果是 NVIDIA 显卡，切换 GPU 推理的步骤：  
+1. 安装 `onnxruntime-gpu` ；  
+2. 取消 `efficient_ir.py` 第 61 行的注释；  
+3. 将 provider 需要换成 `GPUExecutionProvider`。
+
+支持 DX12 Compute 的任意显卡（包括集成显卡），切换 GPU 推理的步骤：  
+1. 安装 `onnxruntime-dml` ；
+2. 取消 `efficient_ir.py` 第 61 行的注释。  
 
 ### Q&A
 
 > Q：可承载最大索引数量是多少？如何修改？  
 > A：目前是 1000000。可以在 `efficient_ir.py` 中修改，数值将在下一次加载时生效。
 
-> Q：需要删除某一张图片的索引该如何操作？  
-> A：参考 `utils.py` 中 `remove_nonexists` 的实现。
-
-> Q：改变搜索结果数量？  
-> A：修改调用 checkout 的第三个参数。
-
 > Q：检索效果不佳怎么解决？  
 > A：当前代码中使用 EfficientNet-b2 模型是经过权衡后决定的，若追求更佳检索效果请自行更换更大规模的 EfficientNet 模型或其他的 SOTA 模型。本项目将持续关注 SOTA 模型的发展，并在 [Wiki](https://github.com/Sg4Dylan/EfficientIR/wiki) 中更新相关测试结果。
 
 ### TODO
 
- - [ ] ~~实现 Cli 工具~~
  - [x] 实现 GUI 工具
  - [ ] 移植到 C++ 使用
  - [ ] 替换 digiKam 内的模糊搜索

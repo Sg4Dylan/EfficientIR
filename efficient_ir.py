@@ -7,12 +7,11 @@ import onnxruntime
 
 class EfficientIR:
 
-    img_size = 260 # 456 for B5, 224 for B0, 260 for B2
-    index_path = 'index/index.bin'
-    index_max_size = 1000000
-    model_path = 'models/imagenet-b2-opti.onnx'
-
-    def __init__(self):
+    def __init__(self, img_size, index_capacity, index_path, model_path):
+        self.img_size = img_size
+        self.index_capacity = index_capacity
+        self.index_path = index_path
+        self.model_path = model_path
         self.init_index()
         self.load_index()
         self.init_model()
@@ -46,9 +45,9 @@ class EfficientIR:
 
     def load_index(self):
         if os.path.exists(self.index_path):
-            self.hnsw_index.load_index(self.index_path, max_elements=self.index_max_size)
+            self.hnsw_index.load_index(self.index_path, max_elements=self.index_capacity)
         else:
-            self.hnsw_index.init_index(max_elements=self.index_max_size, ef_construction=200, M=48)
+            self.hnsw_index.init_index(max_elements=self.index_capacity, ef_construction=200, M=48)
 
 
     def save_index(self):
@@ -56,7 +55,10 @@ class EfficientIR:
 
 
     def init_model(self):
-        self.session = onnxruntime.InferenceSession(self.model_path, None)
+        self.session_opti = onnxruntime.SessionOptions()
+        self.session_opti.enable_mem_pattern = False
+        self.session = onnxruntime.InferenceSession(self.model_path, self.session_opti)
+        # self.session.set_providers(['DmlExecutionProvider'])
         self.model_input = self.session.get_inputs()[0].name
         return self.session, self.model_input
 
