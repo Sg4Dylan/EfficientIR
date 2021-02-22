@@ -19,17 +19,17 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="font">
        <font>
-        <family>思源黑体 Heavy</family>
+        <family>微软雅黑</family>
         <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
+        <weight>50</weight>
+        <bold>false</bold>
        </font>
       </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -43,10 +43,10 @@
          <widget class="QLabel" name="label">
           <property name="font">
            <font>
-            <family>思源黑体 Heavy</family>
+            <family>微软雅黑</family>
             <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="text">
@@ -58,7 +58,7 @@
          <widget class="QLineEdit" name="filePath">
           <property name="font">
            <font>
-            <family>思源黑体 Medium</family>
+            <family>微软雅黑</family>
             <pointsize>11</pointsize>
             <weight>75</weight>
             <bold>true</bold>
@@ -76,7 +76,7 @@
           </property>
           <property name="font">
            <font>
-            <family>思源黑体 Heavy</family>
+            <family>微软雅黑</family>
             <pointsize>10</pointsize>
             <weight>75</weight>
             <bold>true</bold>
@@ -92,10 +92,10 @@
          <widget class="QLabel" name="label_2">
           <property name="font">
            <font>
-            <family>思源黑体 Heavy</family>
+            <family>微软雅黑</family>
             <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="text">
@@ -107,10 +107,10 @@
          <widget class="QSpinBox" name="resultCount">
           <property name="font">
            <font>
-            <family>思源黑体 Medium</family>
+            <family>微软雅黑</family>
             <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="minimum">
@@ -134,7 +134,7 @@
           </property>
           <property name="font">
            <font>
-            <family>思源黑体 Heavy</family>
+            <family>微软雅黑</family>
             <pointsize>13</pointsize>
             <weight>75</weight>
             <bold>true</bold>
@@ -149,7 +149,7 @@
          <widget class="QTableWidget" name="resultTable">
           <property name="font">
            <font>
-            <family>思源黑体 Medium</family>
+            <family>微软雅黑</family>
             <pointsize>10</pointsize>
             <weight>50</weight>
             <bold>false</bold>
@@ -186,119 +186,28 @@
            <widget class="QLabel" name="label_7">
             <property name="minimumSize">
              <size>
-              <width>512</width>
+              <width>380</width>
               <height>0</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Heavy</family>
+              <family>微软雅黑</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;依据不同状况查重过程可能需要耗费数秒至数分钟，请耐心等待&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;查重过程需要耗费数秒至数分钟，请耐心等待&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_5">
-            <property name="maximumSize">
-             <size>
-              <width>90</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>思源黑体 Heavy</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>相似度阈值：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QDoubleSpinBox" name="similarityThreshold">
-            <property name="maximumSize">
-             <size>
-              <width>70</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="minimum">
-             <double>70.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>100.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.100000000000000</double>
-            </property>
-            <property name="value">
-             <double>98.500000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_6">
-            <property name="maximumSize">
-             <size>
-              <width>18</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>思源黑体 Heavy</family>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>%</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="startSearchDuplicate">
-            <property name="minimumSize">
-             <size>
-              <width>85</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>85</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>思源黑体 Heavy</family>
-              <pointsize>13</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>开始查重</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="5">
+          <item row="1" column="0" colspan="8">
            <widget class="QTableWidget" name="resultTableDuplicate">
             <property name="font">
              <font>
-              <family>思源黑体 Medium</family>
+              <family>微软雅黑</family>
               <pointsize>10</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -325,6 +234,135 @@
               <set>AlignCenter</set>
              </property>
             </column>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QPushButton" name="startSearchDuplicate">
+            <property name="minimumSize">
+             <size>
+              <width>85</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>13</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>开始查重</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QCheckBox" name="sameFolder">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>73</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>相同目录</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QLabel" name="label_6">
+            <property name="maximumSize">
+             <size>
+              <width>18</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>%</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QDoubleSpinBox" name="similarityThreshold">
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="minimum">
+             <double>70.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>98.500000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_5">
+            <property name="maximumSize">
+             <size>
+              <width>90</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>11</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>相似度阈值：</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -354,7 +392,7 @@
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Heavy</family>
+              <family>微软雅黑</family>
               <pointsize>11</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -378,7 +416,7 @@
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Medium</family>
+              <family>微软雅黑</family>
               <pointsize>10</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -399,7 +437,7 @@
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Normal</family>
+              <family>微软雅黑</family>
               <pointsize>11</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -423,7 +461,7 @@
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Medium</family>
+              <family>微软雅黑</family>
               <pointsize>10</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -444,7 +482,7 @@
             </property>
             <property name="font">
              <font>
-              <family>思源黑体 Medium</family>
+              <family>微软雅黑</family>
               <pointsize>10</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -457,6 +495,14 @@
           </item>
           <item row="2" column="0" rowspan="4">
            <widget class="QTableWidget" name="searchDirTable">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
             <column>
              <property name="text">
               <string>图库目录</string>
