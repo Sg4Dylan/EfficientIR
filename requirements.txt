@@ -1,6 +1,6 @@
-numpy==1.18.1
-onnx==1.6.0
-onnxruntime==1.2.0
+numpy==1.19.2
+onnx>=1.7.0
+onnxruntime>=1.5.3
 Pillow>=7.0.0
-tqdm==4.36.1
-hnswlib==0.3.4
+tqdm>=4.54.1
+hnswlib>=0.3.4
