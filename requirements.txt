@@ -1,4 +1,4 @@
-numpy==1.19.2
+numpy==1.22.0
 onnx>=1.7.0
 onnxruntime>=1.5.3
 Pillow>=7.0.0
