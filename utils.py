@@ -18,6 +18,15 @@ class Utils:
             config['index_path'],
             config['model_path'],
         )
+        self.check_env()
+
+
+    def check_env(self):
+        if not os.path.exists(self.exists_index_path):
+            parent_path = os.path.join(self.exists_index_path, os.pardir)
+            os.makedirs(os.path.abspath(parent_path), exist_ok=True)
+            with open(self.exists_index_path, 'w') as wp:
+                wp.write("[]")
 
 
     def get_exists_index(self):
