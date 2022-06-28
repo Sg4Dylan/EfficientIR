@@ -54,8 +54,8 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def double_click_search_table(self, info):
-        row = info.row()
-        os.startfile(self.resultTable.item(row, 0).text())
+        file_path = self.resultTable.item(info.row(), 0).text()
+        os.startfile(os.path.normpath(file_path))
 
 
     def double_click_duplicate_table(self, info):
@@ -74,6 +74,7 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         self.resultTable.setRowCount(0)                                                                 # 清空表格
         nc = self.resultCount.value()
+        nc = nc if nc <= len(self.exists_index) else len(self.exists_index)
         results = utils.checkout(self.input_path[0], self.exists_index, nc)
         for i in results:
             row = self.resultTable.rowCount()
