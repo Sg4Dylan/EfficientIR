@@ -54,8 +54,11 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def double_click_search_table(self, info):
-        file_path = self.resultTable.item(info.row(), 0).text()
-        os.startfile(os.path.normpath(file_path))
+        file_path = os.path.normpath(self.resultTable.item(info.row(), 0).text())
+        if os.path.exists(file_path):
+            os.startfile(file_path)
+        else:
+            QtWidgets.QMessageBox.warning(self, '警告', '图片文件不存在：' + file_path)
 
 
     def double_click_duplicate_table(self, info):
@@ -63,7 +66,11 @@ class MainUI(QtWidgets.QMainWindow, Ui_MainWindow):
         if col > 1:
             return
         row = info.row()
-        os.startfile(self.resultTableDuplicate.item(row, col).text())
+        file_path = self.resultTableDuplicate.item(row, col).text()
+        if os.path.exists(file_path):
+            os.startfile(file_path)
+        else:
+            QtWidgets.QMessageBox.warning(self, '警告', '图片文件不存在：' + file_path)
 
 
     def start_search(self):

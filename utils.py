@@ -99,8 +99,11 @@ class Utils:
             exists_index = json.loads(open(self.exists_index_path, 'rb').read())
         for idx in tqdm(range(len(exists_index)), ascii=True, desc='删除不存在文件'):
             if not os.path.exists(exists_index[idx]):
-                exists_index[idx] = NOTEXISTS
-                self.ir_engine.hnsw_index.mark_deleted(idx)
+                exists_index[idx] = NOTEXISTS                
+                try:
+                    self.ir_engine.hnsw_index.mark_deleted(idx)
+                except:
+                    pass
         with open(self.exists_index_path, 'wb') as wp:
             wp.write(json.dumps(exists_index,ensure_ascii=False).encode('UTF-8'))
 
