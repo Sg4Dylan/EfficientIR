@@ -103,6 +103,10 @@ return self.session.run([], {self.model_input: norm_img_data})[0]
  - [ ] 移植到 C++ 使用
  - [ ] 替换 digiKam 内的模糊搜索
 
+### 相关项目
+
+ - [dupimg-finder](https://github.com/LolipopJ/dupimg-finder)：基于 Electron 实现的桌面端重复（相似）图像查找工具。
+
 ### References
  - [EfficientNet PyTorch](https://github.com/lukemelas/EfficientNet-PyTorch)
  - [Once For All](https://github.com/mit-han-lab/once-for-all)
